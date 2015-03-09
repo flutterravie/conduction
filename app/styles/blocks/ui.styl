@@ -6,13 +6,15 @@
 		height 40px
 		line-height 40px
 		&__item
-			float right
-			padding 0 16px
-			border-left 1px solid black
+			float left
+			text-align center
 			border-bottom 1px solid black
 			background #ccc
+			&:first-child
+				width 45%
+				border-right 1px solid black
 			&:last-child
-				border-left none
+				width 55%
 		&__item_active
 			border-bottom none
 			background #ddd
