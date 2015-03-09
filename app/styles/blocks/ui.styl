@@ -1,0 +1,59 @@
+.cond-ui
+	width 470px
+	height 500px
+	font-family 'Courier New',sans-serif;
+	&-nav
+		height 40px
+		line-height 40px
+		&__item
+			float right
+			padding 0 16px
+			border-left 1px solid black
+			border-bottom 1px solid black
+			background #ccc
+			&:last-child
+				border-left none
+		&__item_active
+			border-bottom none
+			background #ddd
+			
+	&-wrapper
+		padding 30px 20px
+		
+	/*&-general
+		display none*/
+	&-extra
+		display none
+		
+	&__item
+		margin-bottom: 30px
+		&__label
+			display inline-block
+			margin-right 5px
+			margin-bottom: 10px
+		&__range
+			margin 0 5px
+			&-input
+				-webkit-appearance none
+				-moz-appearance none
+				display inline-block
+				height 2px
+				background #aaa
+				&::-webkit-slider-thumb
+					-webkit-appearance none
+					width 10px 
+					height 20px
+					border 1px solid black
+					background #ddd
+				&::-moz-range-thumb
+					-moz-appearance none
+					width 10px 
+					height 20px
+					border 1px solid black
+					background #ddd
+	
+	&__btn
+		&_start:after
+			content 'Старт'
+		&_pause:after
+			content 'Пауза'
