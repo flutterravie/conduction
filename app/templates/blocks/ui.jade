@@ -1,10 +1,10 @@
 .cond-ui-nav
-	.cond-ui-nav__item.cond-ui-nav__item_active
+	.cond-ui-nav__item.cond-ui-nav__item_active.js-tab
 		| Основные настройки
-	.cond-ui-nav__item
+	.cond-ui-nav__item.js-tab
 		| Дополнительные настройки
 
-.cond-ui-wrapper.cond-ui-general
+.cond-ui-wrapper.cond-ui-general.cond-ui-wrapper_active.js-tab-content
 	.cond-ui__item
 		.cond-ui__item__label Начальная температура воды:
 		input(type='range' min='10' max='90' value="20" step='10').cond-ui__item__range-input
@@ -17,7 +17,7 @@
 	button.cond-ui__btn.cond-ui__btn_switch.cond-ui__btn_start
 	button.cond-ui-btn.cond-ui__btn_reset Перезапустить
 
-.cond-ui-wrapper.cond-ui-extra
+.cond-ui-wrapper.cond-ui-extra.js-tab-content
 		.cond-ui__item
 			.cond-ui__item__label Объём воды:
 			input(type='range' min='10' max='100' value="10" step='10').cond-ui__item__range-input
