@@ -1,31 +1,26 @@
-//
-	.cond-ui-nav
-		.cond-ui-nav__item.cond-ui-nav__item_active.js-tab
-			| Основные настройки
-		.cond-ui-nav__item.js-tab
-			| Дополнительные настройки
+.cond-ui-wrapper.js-tab-content
+	.cond-ui__item
+		.cond-ui__caption Состояние:
+		label.cond-ui__label
+			input(type='radio' name='condition' checked).cond-ui__radio
+			| Лёд
+		label.cond-ui__label
+			input(type='radio' name='condition').cond-ui__radio
+			| Вода
+		label.cond-ui__label
+			input(type='radio' name='condition').cond-ui__radio
+			| Кипящая вода
 
-.cond-ui-wrapper.cond-ui-general.cond-ui-wrapper_active.js-tab-content
-	.cond-ui__item
-		.cond-ui__item__label Начальная температура воды:
-		input(type='range' min='10' max='90' value="20" step='10').cond-ui__item__range-input
-	.cond-ui__item
-		.cond-ui__item__label Объём воды:
-		input(type='range' min='10' max='100' value="10" step='10').cond-ui__item__range-input
-	.cond-ui__item
-		.cond-ui__item__label Скорость:
-			input(type='radio' name='speed').cond-ui__item__range
-			input(type='radio' name='speed' checked).cond-ui__item__range
-			input(type='radio' name='speed').cond-ui__item__range
-			input(type='radio' name='speed').cond-ui__item__range
-	button.cond-ui__btn.cond-ui__btn_switch.cond-ui__btn_start.js-start
-	button.cond-ui-btn.cond-ui__btn_reset.js-stop Стоп
+	.cond-ui__item Объём воды:
+		input.cond-ui__input
 
-//
-	.cond-ui-wrapper.cond-ui-extra.js-tab-content
-			.cond-ui__item
-				.cond-ui__item__label Радиус сосуда:
-				input(type='range' min='5' max='20' value="10" step='5').cond-ui__item__range-input
-			.cond-ui__item
-				.cond-ui__item__label Высота сосуда:
-				input(type='range' min='10' max='40' value="30" step='10').cond-ui__item__range-input
+	.cond-ui__item
+		.cond-ui__caption Скорость:
+				input(type='radio' name='speed').cond-ui__radio
+				input(type='radio' name='speed' checked).cond-ui__radio
+				input(type='radio' name='speed').cond-ui__radio
+				input(type='radio' name='speed').cond-ui__radio
+
+	.cond-ui__btn.js-stop Стоп
+	.cond-ui__btn.js-start Старт
+	.cond-ui__btn.js-pause Пауза
