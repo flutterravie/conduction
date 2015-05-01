@@ -1,15 +1,15 @@
 .cond-ui-wrapper.js-tab-content
 	.cond-ui__item
 		.cond-ui__caption Состояние:
-		label.cond-ui__label
-			input(type='radio' name='condition' checked).cond-ui__radio
-			| Лёд
-		label.cond-ui__label
-			input(type='radio' name='condition').cond-ui__radio
-			| Вода
-		label.cond-ui__label
-			input(type='radio' name='condition').cond-ui__radio
-			| Кипящая вода
+		.cond-ui__radiobox
+			input(id='ice' type='radio' name='condition' checked).cond-ui__radio
+			label(for='ice').cond-ui__label Лёд
+		.cond-ui__radiobox
+			input(id='water' type='radio' name='condition').cond-ui__radio
+			label(for='water').cond-ui__label Вода
+		.cond-ui__radiobox
+			input(id='boil' type='radio' name='condition').cond-ui__radio
+			label(for='boil').cond-ui__label Кипящая вода
 
 	.cond-ui__item Объём воды:
 		input.cond-ui__input
