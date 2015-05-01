@@ -35,7 +35,7 @@ $(function () {
 		freq = 7.8125;
 	});
 
-	function volume(H) {
+	function setHeight(H) {
 		if (H > 200) {
 			H = 200;
 			$('.js-volume').val(600);
@@ -98,7 +98,7 @@ $(function () {
 	}
 
 	$('.js-volume').on('change', function () {
-		volume(Math.ceil(parseInt($('.js-volume').val()) / 3));
+		setHeight(Math.ceil(parseInt($('.js-volume').val()) / 3));
 	});
 
 });
