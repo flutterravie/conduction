@@ -10,7 +10,7 @@ $(function () {
 		$volume = $('js-volume'),
 		$iceRadio = $('#ice'),
 		$waterRadio = $('#water'),
-		$boilRadio = $('#boil'), 
+		$boilRadio = $('#boil'),
 		m = 0.75, // масса/объём, кг/л
 		tempStart = parseFloat($temp.text()), // стартовая температура
 		freq = 1000, // частота обновления, мс
@@ -34,6 +34,19 @@ $(function () {
 		stopPushed = true;
 		freq = 7.8125;
 	});
+
+	function volume(H) {
+		if (H > 200) {
+			H = 200;
+			$('.js-volume').val(600);
+		}
+		if (H < 0) {
+			H = 0;
+			$('.js-volume').val(0);
+		}
+		$('.js-water').height(H);
+		$('.js-ice').height(H);
+	}
 
 	function countT() {
 		tMelt = Math.ceil(335 * m / 2);
@@ -83,4 +96,9 @@ $(function () {
 			}
 		}, freq);
 	}
+
+	$('.js-volume').on('change', function () {
+		volume(Math.ceil(parseInt($('.js-volume').val()) / 3));
+	});
+
 });
