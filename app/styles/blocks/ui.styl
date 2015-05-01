@@ -12,11 +12,39 @@
 	&__caption
 		margin-bottom 5px
 
-	&__label
-		display block;
+	&__radiobox
+		margin-bottom 2px
 
 	&__radio
+		position relative
+		top 2px
 		margin-right 15px
+		cursor pointer
+		&:checked
+		&:checked + label
+			cursor default
+		&:checked:before
+			position absolute
+			top 25%
+			left 3px
+			z-index 20
+			display block
+			width 70%
+			height 70%
+			background #666
+			content ''
+		&:after
+			position absolute
+			z-index 10
+			display block
+			width 100%
+			height 100%
+			background #ddd
+			border 1px solid #666
+			content ''
+
+	&__label
+		cursor pointer
 
 	&__input
 		width 125px
