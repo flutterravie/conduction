@@ -13,22 +13,18 @@ $(function () {
 		$iceRadio = $('#iceRadio'),
 		$waterRadio = $('#waterRadio'),
 		$boilRadio = $('#boilRadio'),
+		$speedSlow = $('#slow'),
+		$speedNormal = $('#normal'),
+		$speedFast = $('#fast'),
+		$speedVeryFast = $('#veryFast'),
+		$speedChange = $('.cond-ui__speed'),
 		m = 0.75, // масса/объём, кг/л
 		freq = 1000, // частота обновления, мс
-		stopPushed = false,
-		waterH = $('.js-water').height(), // высота блока воды
-		iceW = $('.js-ice').width(),
-		iceH = $('.js-ice').height();
-
-	$('.js-start').on('click', function () {
-		countT();
-		melt();
-	});
-
-	$('.js-stop').on('click', function () {
-		stopPushed = true;
-		freq = 7.8125;
-	});
+		speedChanged = false,
+		paused = false,
+		waterH, // высота блока воды
+		iceW,
+		iceH;
 
 	function setHeight(H) {
 		if (H > 200) {
@@ -46,7 +42,10 @@ $(function () {
 	}
 
 	function countT() {
-		tMelt = Math.ceil(335 * m / 2); // t = л(кДж/кг) * m(кг) / p(кВт)
+		iceW = $('.js-ice').width();
+		iceH = $('.js-ice').height();
+		waterH = $('.js-water').height();
+		tMelt = Math.ceil(335 * m / 2);
 		tempStart = parseFloat($temp.text());
 		tHeat = Math.ceil(4.187 * m * (100 - tempStart) / 2); // t = c(кДж/кг*К) * m(кг) * dT(°c) / p(кВт)
 		tBoil = Math.ceil(2256 * m / 2);
@@ -64,10 +63,13 @@ $(function () {
 				iceH = iceH - dIceHeight;
 				$('.js-ice').width(iceW).height(iceH);
 				tMelt--;
-				if (stopPushed) {
-					stopPushed = false;
+				if (speedChanged) {
+					speedChanged = false;
 					clearInterval(counterID);
 					melt();
+				}
+				if (paused) {
+					clearInterval(counterID);
 				}
 				if (tMelt <= 0) {
 					clearInterval(counterID);
@@ -88,10 +90,13 @@ $(function () {
 				}
 				$temp.text(tempStart.toFixed(0));
 				tHeat--;
-				if (stopPushed) {
-					stopPushed = false;
+				if (speedChanged) {
+					speedChanged = false;
 					clearInterval(counterID);
 					heat();
+				}
+				if (paused) {
+					clearInterval(counterID);
 				}
 				if (tHeat <= 0) {
 					clearInterval(counterID);
@@ -106,10 +111,13 @@ $(function () {
 				waterH = waterH - dHeight;
 				$('.js-water').height(waterH);
 				tBoil--;
-				if (stopPushed) {
-					stopPushed = false;
+				if (speedChanged) {
+					speedChanged = false;
 					clearInterval(counterID);
 					boil();
+				}
+				if (paused) {
+					clearInterval(counterID);
 				}
 				if (tBoil <= 0) {
 					clearInterval(counterID);
@@ -117,10 +125,6 @@ $(function () {
 				}
 			}, freq);
 	}
-
-	$('.js-volume').on('change', function () {
-		setHeight(Math.ceil(parseInt($('.js-volume').val()) / 3));
-	});
 
 	$iceRadio.on('click', function () {
 		$ice.show();
@@ -136,4 +140,45 @@ $(function () {
 		$ice.hide();
 		$temp.text(100);
 	});
+
+	$('.js-volume').on('change', function () {
+		setHeight(parseInt($('.js-volume').val()) / 3);
+	});
+
+	$speedChange.on('click', function () {
+		speedChanged = true;
+	});
+
+	$speedSlow.on('click', function () {
+		freq = 1000;		
+	});
+
+	$speedNormal.on('click', function () {
+		freq = 250;		
+	});
+
+	$speedFast.on('click', function () {
+		freq = 62.5;		
+	});
+
+	$speedVeryFast.on('click', function () {
+		freq = 15.625;		
+	});
+
+	$('.js-start').on('click', function () {
+		paused = false;
+		countT();
+		melt();
+	});
+
+	$('.js-pause').on('click', function () {
+		paused = true;
+	})
+
+	$('.js-stop').on('click', function () {
+		paused = true;
+		setTimeout(function () {
+			setHeight(parseInt($('.js-volume').val()) / 3);
+		}, 1000);
+	})
 });

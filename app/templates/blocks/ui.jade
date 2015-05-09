@@ -17,17 +17,17 @@
 
 	.cond-ui__item
 		.cond-ui__caption Скорость:
-			.cond-ui__speed
+			.cond-ui__speed#slow
 				input(type='radio' name='speed' id='speedSlow' checked).cond-ui__radio
 				label(for='speedSlow') 1x
-			.cond-ui__speed
-				input(type='radio' name='speed').cond-ui__radio
+			.cond-ui__speed#normal
+				input(type='radio' name='speed' id='speedNormal').cond-ui__radio
 				label(for='speedNormal') 4x
-			.cond-ui__speed
-				input(type='radio' name='speed').cond-ui__radio
+			.cond-ui__speed#fast
+				input(type='radio' name='speed' id='speedFast').cond-ui__radio
 				label(for='speedFast') 16x
-			.cond-ui__speed
-				input(type='radio' name='speed').cond-ui__radio
+			.cond-ui__speed#veryFast
+				input(type='radio' name='speed' id='speedVeryFast').cond-ui__radio
 				label(for='speedVeryFast') 64x
 
 	.cond-ui__btn.js-start Старт

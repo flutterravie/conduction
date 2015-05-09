@@ -2,13 +2,14 @@
 	float left
 	display block
 	position relative
-	width 730px
-	height 500px
+	width 350px
+	height 400px
 	border 1px solid #000
-	padding 30px 20px
+	padding-top 50px
 	&-walls
 		position relative
 		display block
+		margin 0 auto
 		width 200px
 		height 205px
 		border-left 2px solid #000
@@ -92,13 +93,13 @@
 		bottom 0
 		width inherit
 		height 30px
+		text-align center
 		clearfix()
 
 	&-label
 		font-family 'Courier New', sans-serif
-		float left
-		margin-right 30px
-
+		width 100%
+		
 	&-temperature
 		&:before
 			content 'Температура: '
