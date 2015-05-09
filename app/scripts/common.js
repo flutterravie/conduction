@@ -2,7 +2,8 @@ $(function () {
 
 	'use strict';
 	// 1px воды = 3мл
-	var	tMelt,
+	var
+		tMelt, // время плавления льда, сек
 		tHeat, // время нагревания, сек
 		tBoil, // время выкипания, сек
 		tempStart, // стартовая температура
@@ -39,11 +40,13 @@ $(function () {
 			$('.js-volume').val(0);
 		}
 		$('.js-water').height(H);
-		$('.js-ice').height(H);
+		$('.js-ice').height(H).css('top', 205 - H);
+		$('.cond-vessel-ice__top').css('height', String(40 / H * 100) + '%').css('top', String(-23 / H * 100) + '%');
+		$('.cond-vessel-ice__bottom').css('height', String(40 / H * 100) + '%').css('bottom', String(-18 / H * 100) + '%');
 	}
 
 	function countT() {
-		tMelt = Math.ceil(335 * m / 2);
+		tMelt = Math.ceil(335 * m / 2); // t = л(кДж/кг) * m(кг) / p(кВт)
 		tempStart = parseFloat($temp.text());
 		tHeat = Math.ceil(4.187 * m * (100 - tempStart) / 2); // t = c(кДж/кг*К) * m(кг) * dT(°c) / p(кВт)
 		tBoil = Math.ceil(2256 * m / 2);

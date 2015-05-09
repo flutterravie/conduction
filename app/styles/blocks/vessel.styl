@@ -64,8 +64,8 @@
 		line-height 130px
 		background #d3e2ff
 		z-index 3
-		&:before
-		&:after
+		&__top
+		&__bottom
 			content ''
 			position absolute
 			display block
@@ -73,10 +73,11 @@
 			height 26%
 			border-radius 100%
 			background inherit
-		&:after //поверхность
+		&__top //поверхность
 			top -15.3333%
+			z-index 10
 			border-bottom 1px solid #9db6e5
-		&:before //дно
+		&__bottom //дно
 			bottom -12%
 		&-wrapper
 			position absolute
@@ -85,25 +86,25 @@
 			left 50%
 			width 200px
 			height 150px
-			
+
 	&-footer
 		position absolute
 		bottom 0
 		width inherit
 		height 30px
 		clearfix()
-	
+
 	&-label
 		font-family 'Courier New', sans-serif
 		float left
 		margin-right 30px
-			
+
 	&-temperature
 		&:before
 			content 'Температура: '
 		&:after
 			content '°c'
-		
+
 	&-vol
 		&:before
 			content 'Объём: '
