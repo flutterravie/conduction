@@ -1,18 +1,24 @@
 $(function () {
 
 	'use strict';
+
 	// 1px воды = 3мл
+
 	var
 		tMelt, // время плавления льда, сек
-		tHeat, // время нагревания, сек
-		tBoil, // время выкипания, сек
+		tHeat, // время нагревания воды, сек
+		tBoil, // время выкипания воды, сек
 		tempStart, // стартовая температура
-		$temp = $('.js-temp'),
-		$volume = $('js-volume'),
+		$temp = $('.js-temp'), // индикатор температуры
+		$volume = $('.js-volume'), // поле ввода объёма воды
 		$ice = $('.js-ice'),
+		$water = $('.js-water'),
+		// переключатели исходного состояния
 		$iceRadio = $('#iceRadio'),
 		$waterRadio = $('#waterRadio'),
 		$boilRadio = $('#boilRadio'),
+		$radio = $('.cond-ui__radio'),
+		// переключатели скорости
 		$speedSlow = $('#slow'),
 		$speedNormal = $('#normal'),
 		$speedFast = $('#fast'),
@@ -21,34 +27,37 @@ $(function () {
 		m = 0.75, // масса/объём, кг/л
 		freq = 1000, // частота обновления, мс
 		speedChanged = false,
+		started = false,
 		paused = false,
 		waterH, // высота блока воды
 		iceW,
 		iceH;
 
+	// установить высоту блока воды и льда
 	function setHeight(H) {
 		if (H > 200) {
 			H = 200;
-			$('.js-volume').val(600);
+			$volume.val(600);
 		}
 		if (H < 0) {
 			H = 0;
-			$('.js-volume').val(0);
+			$volume.val(0);
 		}
-		$('.js-water').height(H);
-		$('.js-ice').height(H).css('top', 205 - H);
-		$('.cond-vessel-ice__top').css('height', String(40 / H * 100) + '%').css('top', String(-23 / H * 100) + '%');
-		$('.cond-vessel-ice__bottom').css('height', String(40 / H * 100) + '%').css('bottom', String(-18 / H * 100) + '%');
+		$water.height(H);
+		$ice.height(H).css('top', 205 - H);
+		$('.js-ice__top').css('height', String(40 / H * 100) + '%').css('top', String(-23 / H * 100) + '%');
+		$('.js-ice__bottom').css('height', String(40 / H * 100) + '%').css('bottom', String(-18 / H * 100) + '%');
 	}
 
+	// рассчёт времени таяния, нагревания и выкипания
 	function countT() {
-		iceW = $('.js-ice').width();
-		iceH = $('.js-ice').height();
-		waterH = $('.js-water').height();
-		tMelt = Math.ceil(335 * m / 2);
+		iceW = $ice.width();
+		iceH = $ice.height();
+		waterH = $water.height();
 		tempStart = parseFloat($temp.text());
-		tHeat = Math.ceil(4.187 * m * (100 - tempStart) / 2); // t = c(кДж/кг*К) * m(кг) * dT(°c) / p(кВт)
-		tBoil = Math.ceil(2256 * m / 2);
+		tMelt = Math.ceil(335 * m / 2); // t(sec) = λ(кДж/кг) * m(кг) / p(кВт)
+		tHeat = Math.ceil(4.187 * m * (100 - tempStart) / 2); // t(sec) = c(кДж/кг*К) * m(кг) * ΔT(°c) / p(кВт)
+		tBoil = Math.ceil(2256 * m / 2); // t(sec) = L(кДж/кг) * m(кг) / p(кВт)
 	}
 
 	function melt() {
@@ -61,7 +70,7 @@ $(function () {
 				}
 				iceW = iceW - dIceWidth;
 				iceH = iceH - dIceHeight;
-				$('.js-ice').width(iceW).height(iceH);
+				$ice.width(iceW).height(iceH);
 				tMelt--;
 				if (speedChanged) {
 					speedChanged = false;
@@ -109,7 +118,7 @@ $(function () {
 		var dHeight = m * 200 / tBoil,
 			counterID = setInterval(function () {
 				waterH = waterH - dHeight;
-				$('.js-water').height(waterH);
+				$water.height(waterH);
 				tBoil--;
 				if (speedChanged) {
 					speedChanged = false;
@@ -121,28 +130,34 @@ $(function () {
 				}
 				if (tBoil <= 0) {
 					clearInterval(counterID);
-					$('.js-water').hide();
+					$water.hide();
 				}
 			}, freq);
 	}
 
 	$iceRadio.on('click', function () {
-		$ice.show();
-		$temp.text(0);
+		if (!started) {
+			$ice.show();
+			$temp.text(0);
+		}
 	});
 
 	$waterRadio.on('click', function () {
-		$ice.hide();
-		$temp.text(50);
+		if (!started) {
+			$ice.hide();
+			$temp.text(50);
+		}
 	});
 
 	$boilRadio.on('click', function () {
-		$ice.hide();
-		$temp.text(100);
+		if (!started) {
+			$ice.hide();
+			$temp.text(100);
+		}
 	});
 
-	$('.js-volume').on('change', function () {
-		setHeight(parseInt($('.js-volume').val()) / 3);
+	$volume.on('change', function () {
+		setHeight(parseInt($volume.val()) / 3);
 	});
 
 	$speedChange.on('click', function () {
@@ -150,35 +165,40 @@ $(function () {
 	});
 
 	$speedSlow.on('click', function () {
-		freq = 1000;		
+		freq = 1000;
 	});
 
 	$speedNormal.on('click', function () {
-		freq = 250;		
+		freq = 250;
 	});
 
 	$speedFast.on('click', function () {
-		freq = 62.5;		
+		freq = 62.5;
 	});
 
 	$speedVeryFast.on('click', function () {
-		freq = 15.625;		
+		freq = 15.625;
 	});
 
 	$('.js-start').on('click', function () {
+		started = true;
 		paused = false;
+		$radio.prop('disabled', true);
 		countT();
 		melt();
 	});
 
 	$('.js-pause').on('click', function () {
 		paused = true;
-	})
+	});
 
 	$('.js-stop').on('click', function () {
+		started = false;
 		paused = true;
 		setTimeout(function () {
-			setHeight(parseInt($('.js-volume').val()) / 3);
+			setHeight(parseInt($volume.val()) / 3);
+			$ice.width(200);
+			$radio.prop('disabled', false);
 		}, 1000);
-	})
+	});
 });
