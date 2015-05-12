@@ -17,7 +17,7 @@ $(function () {
 		$iceRadio = $('#iceRadio'),
 		$waterRadio = $('#waterRadio'),
 		$boilRadio = $('#boilRadio'),
-		$radio = $('.cond-ui__radio'),
+		$condRadio = $('.cond-ui__radiobox .cond-ui__radio'),
 		// переключатели скорости
 		$speedSlow = $('#slow'),
 		$speedNormal = $('#normal'),
@@ -183,7 +183,7 @@ $(function () {
 	$('.js-start').on('click', function () {
 		started = true;
 		paused = false;
-		$radio.prop('disabled', true);
+		$condRadio.prop('disabled', true);
 		countT();
 		melt();
 	});
@@ -198,7 +198,7 @@ $(function () {
 		setTimeout(function () {
 			setHeight(parseInt($volume.val()) / 3);
 			$ice.width(200);
-			$radio.prop('disabled', false);
+			$condRadio.prop('disabled', false);
 		}, 1000);
 	});
 });
